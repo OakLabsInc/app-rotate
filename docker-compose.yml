@@ -1,0 +1,20 @@
+---
+version: '3'
+services:
+  server:
+    build:
+      context: ..
+      dockerfile: default-app/Dockerfile
+    image: index.docker.io/oaklabs/default-application:latest
+    network_mode: host
+    devices:
+      - /dev/dri
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /dev/shm:/dev/shm
+      - ./src:/app/src
+    environment:
+      - NODE_ENV=development
+      - DASHBOARD_HOST=dashboard.oak.host
+    ports:
+      - "9000:9000"

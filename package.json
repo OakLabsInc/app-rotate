@@ -1,0 +1,44 @@
+{
+  "name": "rotate-application",
+  "version": "0.0.1",
+  "description": "Rotate Display and Touch app for OakOS v4.3.x",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node_modules/.bin/oak .",
+    "dev": "PLATFORM_HOST=192.168.11.3 NODE_ENV=development ./node_modules/.bin/nodemon --exec \"npm start\"",
+    "rebuild": "rm -rf node_modules/ package-lock.json && npm i && node_modules/.bin/oak-rebuild $(pwd)",
+    "test": "exit 0;"
+  },
+  "engines": {
+    "node": "8.11.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OakLabsInc/app-rotate.git"
+  },
+  "author": "Richard Joffray <richard@joffray.com>",
+  "license": "Apache 2",
+  "bugs": {
+    "url": "https://github.com/OakLabsInc/app-rotate/issues"
+  },
+  "homepage": "https://github.com/OakLabsInc/app-rotate#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.3",
+    "oak": "~4.3.0"
+  },
+  "dependencies": {
+    "@oaklabs/platform": "~1.2.3",
+    "angular": "~1.7.2",
+    "angular-animate": "~1.7.2",
+    "angular-aria": "~1.7.5",
+    "angular-material": "~1.1.10",
+    "angular-messages": "~1.7.5",
+    "express": "~4.16.3",
+    "lodash": "~4.17.10",
+    "oak-tools": "~0.5.7",
+    "pug": "~2.0.3",
+    "stylus": "~0.54.5",
+    "uuid": "~3.3.2"
+  },
+  "private": true
+}
