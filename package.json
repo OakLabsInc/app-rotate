@@ -40,5 +40,5 @@
     "stylus": "~0.54.5",
     "uuid": "~3.3.2"
   },
-  "private": true
+  "private": false
 }
