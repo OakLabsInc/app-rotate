@@ -20,7 +20,7 @@ html(ng-app='rotateApp')
           label Screen
           md-select(ng-model="display" tab-index='1' required='')
             md-optgroup
-              md-option(ng-repeat="display in displays", ng-value="display" ng-attr="$index === 1?'aria-selected':''" ng-disabled='display.configuration.enabled === false') {{display.display_id}}
+              md-option(ng-repeat="display in displays", ng-value="display" ng-attr="$index === 1?'aria-selected':''" ng-disabled='display.configuration.enabled === false' ng-selected='display.configuration.enabled === true') {{display.display_id}}
         md-input-container(md-no-float, class='md-block')
           label Rotation
           md-select(ng-model="display.configuration.rotate" tab-index='1' required='')
