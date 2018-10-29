@@ -21,7 +21,6 @@ window.app = window.angular
   })
 
 window.app.controller('appController', function ($log, $timeout, $scope, $http, $window, oak, _) {
-
   // ripples
   $scope.untapped = true
   $scope.cursor = {
@@ -77,27 +76,27 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
   }
   $scope.touch_devices = []
   $scope.directions = [
-    "NO_ROTATE",
-    "LEFT",
-    "RIGHT",
-    "INVERTED"
+    'NO_ROTATE',
+    'LEFT',
+    'RIGHT',
+    'INVERTED'
   ]
   $scope.display = {
-    "display_id": "",
-    "configuration": {
-        "enabled": true,
-        "mode": "",
-        "reflect": "NO_REFLECT",
-        "rotate": "NO_ROTATE",
-        "transform": ""
+    'display_id': '',
+    'configuration': {
+      'enabled': true,
+      'mode': '',
+      'reflect': 'NO_REFLECT',
+      'rotate': 'NO_ROTATE',
+      'transform': ''
     }
-  } 
+  }
   $scope.touch = {
-    "touch_device_id": "",
-    "configuration": {
-        "calibration": "",
-        "OBSOLETE_swap_axes": false,
-        "rotate": "NO_ROTATE"
+    'touch_device_id': '',
+    'configuration': {
+      'calibration': '',
+      'OBSOLETE_swap_axes': false,
+      'rotate': 'NO_ROTATE'
     }
   }
   $scope.getAvailableDisplays = function () {
@@ -105,7 +104,7 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
       method: 'GET',
       url: '/display/available'
     }).then(function successCallback (response) {
-      $log.info("getAvailableDisplays",response)
+      $log.info('getAvailableDisplays', response)
       $scope.displays = response.data.displays
     }, function errorCallback (response) {
       $log.info(response)
@@ -116,8 +115,8 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
       method: 'GET',
       url: '/touch/available'
     }).then(function successCallback (response) {
-      $log.info( "getAvailableTouch", response)
-      if(response.data.touch_devices.length){
+      $log.info('getAvailableTouch', response)
+      if (response.data.touch_devices.length) {
         $scope.touch_devices = response.data.touch_devices
         $scope.touch.touch_device_id = $scope.touch_devices[0].touch_device_id
       }
@@ -126,33 +125,50 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
     })
   }
 
-  $scope.rotateScreenAndTouch = function(display){
+  $scope.rotateScreenAndTouch = function (display) {
     $scope.touch.configuration.rotate = display.configuration.rotate
 
     let req = {
       'display': {
-        "display_id": $scope.display.display_id,
-        "configuration": $scope.display.configuration
+        'display_id': $scope.display.display_id,
+        'configuration': $scope.display.configuration
       },
       'touch': {
-        "touch_device_id": $scope.touch.touch_device_id,
-        "configuration" : {
-          "rotate": $scope.display.configuration.rotate
+        'touch_device_id': $scope.touch.touch_device_id,
+        'configuration': {
+          'rotate': $scope.display.configuration.rotate
         }
       }
     }
-    $log.info(req)
+    $log.info('req', req.display)
     $http({
       method: 'GET',
-      url: '/display/rotate?req=' + JSON.stringify(req)
+      url: '/rotate/display?display=' + JSON.stringify(req.display)
     }).then(function successCallback (response) {
-      $log.info( "rotateScreenAndTouch", response)
+      $log.info('/rotate/display', response)
+    }, function errorCallback (response) {
+      $log.info(response)
+    })
+
+    $http({
+      method: 'GET',
+      url: '/rotate/touch?touch=' + JSON.stringify(req.touch)
+    }).then(function successCallback (response) {
+      $log.info('/rotate/touch', response)
     }, function errorCallback (response) {
       $log.info(response)
     })
   }
-  
-
+  $scope.automaticSave = function (display) {
+    $http({
+      method: 'GET',
+      url: '/automatic/generate'
+    }).then(function successCallback (response) {
+      $log.info('automaticSave::', response)
+    }, function errorCallback (response) {
+      $log.info(response)
+    })
+  }
 
   $scope.getAvailableDisplays()
   $scope.getAvailableTouch()

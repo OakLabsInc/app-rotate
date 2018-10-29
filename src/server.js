@@ -4,9 +4,7 @@ const debug = process.env.NODE_ENV !== 'production'
 const oak = require('oak')
 const { join } = require('path')
 const _ = require('lodash')
-const pug = require('pug')
 const tools = require('oak-tools')
-const OakPlatform = require('@oaklabs/platform')
 
 oak.catchErrors()
 
@@ -26,7 +24,6 @@ let publicPath = join(__dirname, 'public')
 let viewsPath = join(__dirname, 'views')
 
 let window = null
-let platformHost = null
 
 app.set('views', viewsPath)
 app.set('view engine', 'pug')
@@ -65,11 +62,12 @@ app.get('/touch/available', function (req, res) {
   })
 })
 
-app.get('/display/rotate', function (req, res) {
-  let rotate = JSON.parse(req.query.req)
-  console.log(rotate)
-  if (_.has(rotate, 'display.display_id')) {
-    platform.displayConfiguration(rotate, function (err, results) {
+app.get('/rotate/display', function (req, res) {
+  let display = JSON.parse(req.query.display)
+  
+  if (_.has(display, 'display_id') && display.display_id !== '') {
+    console.log('/rotate/display::', display)
+    platform.displayConfiguration(display, function (err, results) {
       if (err) {
         res.status(404).send()
       } else {
@@ -77,18 +75,33 @@ app.get('/display/rotate', function (req, res) {
       }
     })
   }
-  if (_.has(rotate, 'touch.touch_device_id')) {
-    platform.touchConfiguration(rotate, function (err, results) {
-      if (err) {
-        res.status(404).send()
-      } else {
-        res.json(results)
-      }
-    })
-  }
-
 })
 
+app.get('/rotate/touch', function (req, res) {
+  let touch = JSON.parse(req.query.touch)
+  
+  if (_.has(touch, 'touch_device_id') && touch.touch_device_id !== '') {
+    console.log('/rotate/touch::', touch)
+    platform.touchConfiguration(touch, function (err, results) {
+      if (err) {
+        res.status(404).send()
+      } else {
+        res.json(results)
+      }
+    })
+  }
+})
+app.get('/automatic/generate', function (req, res) {
+  platform.listPlatformMethods()
+  platform.automaticGenerate(function (err, results) {
+    if (err) {
+      res.status(404).send()
+    } else {
+      res.json(results)
+      console.log('automaticGenerate', results.body)
+    }
+  })
+})
 
 async function loadWindow () {
   logger.info({
