@@ -74,7 +74,7 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
       $scope.untapped = false
     }
   }
-  $scope.touch_devices = []
+  $scope.touchDevices = []
   $scope.directions = [
     'NO_ROTATE',
     'LEFT',
@@ -82,7 +82,7 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
     'INVERTED'
   ]
   $scope.display = {
-    'display_id': '',
+    'displayId': '',
     'configuration': {
       'enabled': true,
       'mode': '',
@@ -92,11 +92,10 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
     }
   }
   $scope.touch = {
-    'touch_device_id': '',
+    'touchDeviceId': '',
     'configuration': {
       'calibration': '',
-      'OBSOLETE_swap_axes': false,
-      'rotate': 'NO_ROTATE'
+      'orientation': 'UPRIGHT'
     }
   }
   $scope.getAvailableDisplays = function () {
@@ -116,27 +115,37 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
       url: '/touch/available'
     }).then(function successCallback (response) {
       $log.info('getAvailableTouch', response)
-      if (response.data.touch_devices.length) {
-        $scope.touch_devices = response.data.touch_devices
-        $scope.touch.touch_device_id = $scope.touch_devices[0].touch_device_id
+      if (response.data.touchDevices.length) {
+        $scope.touchDevices = response.data.touchDevices
+        $scope.touch.touchDeviceId = $scope.touchDevices[0].touchDeviceId
       }
     }, function errorCallback (response) {
       $log.info(response)
     })
   }
 
-  $scope.rotateScreenAndTouch = function (display) {
-    $scope.touch.configuration.rotate = display.configuration.rotate
+  $scope.rotateScreenAndTouch = function (display, isForward) {
+    // $scope.touch.configuration.rotate = display.configuration.rotate
+    let prefix = "FORWARD_"
+    
+    if( !isForward ) {
+      prefix = "BACKWARD_"
+    }
 
+    let orientation = $scope.display.configuration.rotate
+    if ($scope.display.configuration.rotate === "NO_ROTATE") {
+      orientation = "UPRIGHT"
+    }
     let req = {
       'display': {
-        'display_id': $scope.display.display_id,
+        'displayId': $scope.display.displayId,
         'configuration': $scope.display.configuration
       },
       'touch': {
-        'touch_device_id': $scope.touch.touch_device_id,
+        'touchDeviceId': $scope.touch.touchDeviceId,
         'configuration': {
-          'rotate': $scope.display.configuration.rotate
+          'calibration' : '',
+          'orientation': prefix + orientation
         }
       }
     }

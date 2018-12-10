@@ -48,6 +48,7 @@ app.get('/display/available', function (req, res) {
       res.status(404).send()
     } else {
       res.json(results)
+      console.log("touch available: ", results)
     }
   })
 })
@@ -58,6 +59,7 @@ app.get('/touch/available', function (req, res) {
       res.status(404).send()
     } else {
       res.json(results)
+      console.log("display available: ", results)
     }
   })
 })
@@ -65,7 +67,7 @@ app.get('/touch/available', function (req, res) {
 app.get('/rotate/display', function (req, res) {
   let display = JSON.parse(req.query.display)
   
-  if (_.has(display, 'display_id') && display.display_id !== '') {
+  if (_.has(display, 'displayId') && display.displayId !== '') {
     console.log('/rotate/display::', display)
     platform.displayConfiguration(display, function (err, results) {
       if (err) {
@@ -80,19 +82,20 @@ app.get('/rotate/display', function (req, res) {
 app.get('/rotate/touch', function (req, res) {
   let touch = JSON.parse(req.query.touch)
   
-  if (_.has(touch, 'touch_device_id') && touch.touch_device_id !== '') {
+  if (_.has(touch, 'touchDeviceId') && touch.touchDeviceId !== '') {
     console.log('/rotate/touch::', touch)
     platform.touchConfiguration(touch, function (err, results) {
       if (err) {
         res.status(404).send()
       } else {
         res.json(results)
+        console.log("touch results: ", results)
       }
     })
   }
 })
 app.get('/automatic/generate', function (req, res) {
-  platform.listPlatformMethods()
+  //platform.listPlatformMethods()
   platform.automaticGenerate(function (err, results) {
     if (err) {
       res.status(404).send()

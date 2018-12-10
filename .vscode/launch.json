@@ -10,7 +10,10 @@
         "runtimeArgs": [
           "src/server.js"
         ],
-        "env":{}
+        "env":{
+          "PLATFORM_HOST":"192.168.11.17:443",
+          "NODE_ENV":"development"
+        }
       }
     ]
   }
