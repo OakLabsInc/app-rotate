@@ -95,13 +95,16 @@ app.get('/rotate/touch', function (req, res) {
   }
 })
 app.get('/automatic/generate', function (req, res) {
-  //platform.listPlatformMethods()
+  platform.listPlatformMethods()
   platform.automaticGenerate(function (err, results) {
     if (err) {
       res.status(404).send()
     } else {
       res.json(results)
-      console.log('automaticGenerate', results.body)
+      console.log('automaticGenerate', results)
+      platform.automaticStore(results, function (err, res) {
+        console.log('automaticStore', res)
+      })
     }
   })
 })
