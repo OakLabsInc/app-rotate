@@ -20,16 +20,19 @@ html(ng-app='rotateApp')
           label Screen
           md-select(ng-model="display" tab-index='1' required='')
             md-optgroup
-              md-option(ng-repeat="display in displays", ng-value="display" ng-attr="$index === 1?'aria-selected':''" ng-disabled='display.configuration.enabled === false' ng-selected='display.configuration.enabled === true') {{display.display_id}}
+              md-option(ng-repeat="display in displays", ng-value="display" ng-attr="$index === 1?'aria-selected':''" ng-disabled='display.configuration.enabled === false' ng-selected='display.configuration.enabled === true') {{display.displayId}}
         md-input-container(md-no-float, class='md-block')
           label Rotation
           md-select(ng-model="display.configuration.rotate" tab-index='1' required='')
             md-optgroup
               md-option(ng-repeat="direction in directions", ng-value="direction" ng-attr="$index === 1?'aria-selected':''") {{direction}}
+        md-checkbox(ng-model="isForward" aria-label="Finished?" ng-checked="true") Forward Orientation
+
+
       md-divider
       section(layout='row' layout-md='column' layout-align='center center' layout-wrap)
-        md-button(class='md-raised' ng-click="rotateScreenAndTouch(display)") Rotate
-        md-button(class='md-raised' ng-click="automaticSave(display)") Save
+        md-button(class='md-raised' ng-click="rotateScreenAndTouch(display, isForward)") Rotate
+        md-button(class='md-raised' ng-click="automaticSave(display, isForward)") Save
       div.spacer
       md-divider
      

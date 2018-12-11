@@ -1,11 +1,11 @@
 {
   "name": "rotate-application",
   "version": "0.0.1",
-  "description": "Rotate Display and Touch app for OakOS v4.3.x",
+  "description": "Rotate Display and Touch app for OakOS v5.0.x",
   "main": "src/server.js",
   "scripts": {
     "start": "node_modules/.bin/oak .",
-    "dev": "PLATFORM_HOST=192.168.11.3 NODE_ENV=development ./node_modules/.bin/nodemon --exec \"npm start\"",
+    "dev": "PLATFORM_HOST=192.168.0.66:443 NODE_ENV=development npm start",
     "rebuild": "rm -rf node_modules/ package-lock.json && npm i && node_modules/.bin/oak-rebuild $(pwd)",
     "test": "exit 0;"
   },
@@ -23,11 +23,10 @@
   },
   "homepage": "https://github.com/OakLabsInc/app-rotate#readme",
   "devDependencies": {
-    "nodemon": "^1.18.3",
-    "oak": "~4.3.0"
+    "oak": "~4.3.4"
   },
   "dependencies": {
-    "@oaklabs/platform": "~1.2.3",
+    "@oaklabs/platform": "~2.0.1",
     "angular": "~1.7.2",
     "angular-animate": "~1.7.2",
     "angular-aria": "~1.7.5",
