@@ -9,9 +9,6 @@
     "rebuild": "rm -rf node_modules/ package-lock.json && npm i && node_modules/.bin/oak-rebuild $(pwd)",
     "test": "exit 0;"
   },
-  "engines": {
-    "node": "8.11.3"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OakLabsInc/app-rotate.git"
@@ -23,7 +20,7 @@
   },
   "homepage": "https://github.com/OakLabsInc/app-rotate#readme",
   "devDependencies": {
-    "oak": "~4.3.4"
+    "oak": "~5.0.0"
   },
   "dependencies": {
     "@oaklabs/platform": "~2.0.1",
