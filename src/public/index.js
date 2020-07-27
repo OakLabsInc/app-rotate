@@ -4,8 +4,7 @@ window.reload = function () {
   window.oak.reload()
 }
 
-window.app = window.angular
-  .module('rotateApp', [
+window.app = window.angular.module('appRotate', [
     'ngAnimate',
     'ngMessages',
     'ngMaterial'
@@ -74,7 +73,7 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
       $scope.untapped = false
     }
   }
-  $scope.touchDevices = []
+  $scope.touch_devices = []
   $scope.directions = [
     'NO_ROTATE',
     'LEFT',
@@ -82,7 +81,7 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
     'INVERTED'
   ]
   $scope.display = {
-    'displayId': '',
+    'display_id': '',
     'configuration': {
       'enabled': true,
       'mode': '',
@@ -92,7 +91,7 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
     }
   }
   $scope.touch = {
-    'touchDeviceId': '',
+    'touch_device_id': '',
     'configuration': {
       'calibration': '',
       'orientation': 'UPRIGHT'
@@ -115,9 +114,9 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
       url: '/touch/available'
     }).then(function successCallback (response) {
       $log.info('getAvailableTouch', response)
-      if (response.data.touchDevices.length) {
-        $scope.touchDevices = response.data.touchDevices
-        $scope.touch.touchDeviceId = $scope.touchDevices[0].touchDeviceId
+      if (response.data.touch_devices.length) {
+        $scope.touch_devices = response.data.touch_devices
+        $scope.touch.touch_device_id = $scope.touch_devices[0].touch_device_id
       }
     }, function errorCallback (response) {
       $log.info(response)
@@ -138,11 +137,11 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
     }
     let req = {
       'display': {
-        'displayId': $scope.display.displayId,
+        'display_id': $scope.display.display_id,
         'configuration': $scope.display.configuration
       },
       'touch': {
-        'touchDeviceId': $scope.touch.touchDeviceId,
+        'touch_device_id': $scope.touch.touch_device_id,
         'configuration': {
           'calibration' : '',
           'orientation': prefix + orientation
@@ -171,7 +170,7 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
   $scope.automaticSave = function (display) {
     $http({
       method: 'GET',
-      url: '/automatic/generate'
+      url: '/automatic/save'
     }).then(function successCallback (response) {
       $log.info('automaticSave::', response)
     }, function errorCallback (response) {

@@ -48,7 +48,7 @@ app.get('/display/available', function (req, res) {
       res.status(404).send()
     } else {
       res.json(results)
-      console.log("touch available: ", results)
+      console.log("display available: ", results)
     }
   })
 })
@@ -59,7 +59,7 @@ app.get('/touch/available', function (req, res) {
       res.status(404).send()
     } else {
       res.json(results)
-      console.log("display available: ", results)
+      console.log("touch available: ", results)
     }
   })
 })
@@ -67,7 +67,7 @@ app.get('/touch/available', function (req, res) {
 app.get('/rotate/display', function (req, res) {
   let display = JSON.parse(req.query.display)
   
-  if (_.has(display, 'displayId') && display.displayId !== '') {
+  if (_.has(display, 'display_id') && display.display_id !== '') {
     console.log('/rotate/display::', display)
     platform.displayConfiguration(display, function (err, results) {
       if (err) {
@@ -82,7 +82,7 @@ app.get('/rotate/display', function (req, res) {
 app.get('/rotate/touch', function (req, res) {
   let touch = JSON.parse(req.query.touch)
   
-  if (_.has(touch, 'touchDeviceId') && touch.touchDeviceId !== '') {
+  if (_.has(touch, 'touch_device_id') && touch.touch_device_id !== '') {
     console.log('/rotate/touch::', touch)
     platform.touchConfiguration(touch, function (err, results) {
       if (err) {
@@ -109,7 +109,7 @@ app.get('/automatic/generate', function (req, res) {
   })
 })
 
-async function loadWindow () {
+function loadWindow () {
   logger.info({
     message: `Started on port ${port}`
   })
@@ -133,10 +133,10 @@ async function loadWindow () {
       join(__dirname, '..', 'node_modules', 'angular-animate'),
       join(__dirname, '..', 'node_modules', 'angular-aria'),
       join(__dirname, '..', 'node_modules', 'angular-messages'),
-      join(__dirname, '..', 'node_modules', 'angular-material')
+      join(__dirname, '..', 'node_modules', 'angular-material'),
+      join(__dirname, 'public', 'index.js')
     ]
-  })
-    .on('ready', function () {
+  }).on('ready', function () {
       if (debug) {
         window.debug()
       }

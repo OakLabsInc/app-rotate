@@ -1,5 +1,5 @@
 doctype html
-html(ng-app='rotateApp')
+html
   head
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0')
@@ -8,33 +8,32 @@ html(ng-app='rotateApp')
     link(href='/index.css', rel='stylesheet', type='text/css')
     link(href='/vendor/icons.css', rel='stylesheet', type='text/css')
 
-  body(ng-controller='appController' ,  ng-click="tapped($event)", ng-mousemove="mouseMoved($event)", ng-cloak)
-    ripples
-      .ripple(ng-repeat="r in ripples", ng-style="{ top: r.y + 'px', left: r.x + 'px' }")
-    md-content(layout-padding='')
-      .icon
-        .icon-screen_rotation
-      md-divider.no-padding(layout-padding='')
-      div(tablist='')
-        md-input-container(md-no-float, class='md-block')
-          label Screen
-          md-select(ng-model="display" tab-index='1' required='')
-            md-optgroup
-              md-option(ng-repeat="display in displays", ng-value="display" ng-attr="$index === 1?'aria-selected':''" ng-disabled='display.configuration.enabled === false' ng-selected='display.configuration.enabled === true') {{display.displayId}}
-        md-input-container(md-no-float, class='md-block')
-          label Rotation
-          md-select(ng-model="display.configuration.rotate" tab-index='1' required='')
-            md-optgroup
-              md-option(ng-repeat="direction in directions", ng-value="direction" ng-attr="$index === 1?'aria-selected':''") {{direction}}
-        md-checkbox(ng-model="isForward" aria-label="Finished?" ng-checked="true") Forward Orientation
+body(ng-app='appRotate' ng-controller='appController' ,  ng-click="tapped($event)", ng-mousemove="mouseMoved($event)", ng-cloak)
+  ripples
+    .ripple(ng-repeat="r in ripples", ng-style="{ top: r.y + 'px', left: r.x + 'px' }")
+  md-content(layout-padding='')
+    .icon
+      .icon-screen_rotation
+    md-divider.no-padding(layout-padding='')
+    div(tablist='')
+      md-input-container(md-no-float, class='md-block')
+        label Screen
+        md-select(ng-model="display" tab-index='1' required='')
+          md-optgroup
+            md-option(ng-repeat="display in displays", ng-value="display" ng-disabled='display.configuration.enabled === false' ng-selected='display.configuration.enabled === true') {{display.display_id}}
+      md-input-container(md-no-float, class='md-block')
+        label Rotation
+        md-select(ng-model="display.configuration.rotate" tab-index='1' required='')
+          md-optgroup
+            md-option(ng-repeat="direction in directions", ng-value="direction" ) {{direction}}
+      md-checkbox(ng-model="isForward" aria-label="Finished?" ng-checked="true") Forward Orientation
 
 
-      md-divider
-      section(layout='row' layout-md='column' layout-align='center center' layout-wrap)
-        md-button(class='md-raised' ng-click="rotateScreenAndTouch(display, isForward)") Rotate
-        md-button(class='md-raised' ng-click="automaticSave(display, isForward)") Save
-      div.spacer
-      md-divider
-     
+    md-divider
+    section(layout='row' layout-md='column' layout-align='center center' layout-wrap)
+      md-button.md-primary.md-raised(ng-click="rotateScreenAndTouch(display, isForward)") Rotate
+      md-button.md-primary.md-raised(ng-click="automaticSave(display, isForward)") Save
+    div.spacer
+    md-divider
 
-    script(src='/index.js')
+
