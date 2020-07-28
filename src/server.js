@@ -25,6 +25,7 @@ let viewsPath = join(__dirname, 'views')
 
 let window = null
 
+console.log(process.versions)
 app.set('views', viewsPath)
 app.set('view engine', 'pug')
 app.use(stylus.middleware({

@@ -20,22 +20,22 @@
   },
   "homepage": "https://github.com/OakLabsInc/app-rotate#readme",
   "devDependencies": {
-    "oak": "~6.0.1"
+    "oak": "~7.0.0"
   },
   "dependencies": {
     "@oaklabs/platform": "~4.0.0",
-    "angular": "~1.7.2",
+    "angular": "~1.8.0",
     "angular-animate": "~1.8.0",
     "angular-aria": "~1.8.0",
     "angular-material": "~1.1.24",
     "angular-messages": "~1.8.0",
     "express": "~4.17.1",
-    "gulp": "^4.0.2",
+    "gulp": "~4.0.2",
     "lodash": "~4.17.19",
     "oak-tools": "~0.5.7",
     "pug": "~3.0.0",
     "stylus": "~0.54.8",
-    "traverse": "^0.6.6",
+    "traverse": "~0.6.6",
     "uuid": "~3.3.3"
   },
   "private": false
